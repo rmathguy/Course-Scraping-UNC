@@ -3,13 +3,13 @@ from Email_finder import EF
 
 cols_wanted = [0]
 
-def scrape(HTMLFILE,Course_Code,drvr, Cells, EmailVar):
+def scrape(Html, Course_Code, drvr, Cells, EmailVar):
     (No_email_cell, No_email_cell2, No_course_cell, No_name_cell) = Cells
     saved_data = []
 
     Email_Hash = dict()
 
-    ROWS = HTMLFILE.select('tr')
+    ROWS = Html.select('tr')
     for rownum, Row in enumerate(ROWS[1:]):
         # Get the Course Number:{{{
         Course_Num_HTML = Row.findAll('td', {'rowspan': True})
