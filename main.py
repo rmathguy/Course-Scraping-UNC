@@ -36,7 +36,7 @@ def main(COURSE_LIST, EmailVar):
     lenn = len(COURSE_LIST)  # To give an idea of how far we are later
 
     root = tk.Tk()
-    root.geometry('450x120')
+    root.geometry('500x120')
     root.title('Scraping Progress Bar')
 
     root.withdraw()
@@ -61,13 +61,14 @@ def main(COURSE_LIST, EmailVar):
         root,
         orient='horizontal',
         mode='determinate',
-        length=280
+        length=250,
+        takefocus=True
     )
     # place the progress bar
     i = -1
     VL = ttk.Label(root, text=update_progress_label("", start_time, lenn, i))
     progress("", start_time, lenn, i, VL)
-    pb.grid(column=0, row=0, columnspan=2, padx=10, pady=20)
+    pb.grid(column=0, row=0, columnspan=2, padx=150, pady=20)
 
     # Excel Stuff {{{
 
