@@ -1,10 +1,13 @@
-import csv
-import easygui
+import csv  # For handling the csv files we input
+import easygui  # For the pop-up box for the file explorer.
 
 
-csv_file = easygui.fileopenbox(msg = "Choose Course CSV", filetypes=["*.csv"])
 
 def read_csv():
+    csv_file = easygui.fileopenbox(msg="Choose Course CSV",
+                                   filetypes=["*.csv"],
+                                   default="*.csv")
+
     with open(csv_file, newline='') as f:
         reader = csv.reader(f)
         Course_List = list(reader)

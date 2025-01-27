@@ -11,12 +11,10 @@ import Webpage_and_Driver_Start
 
 # For extra windows.
 from tkinter import ttk
-import tkinter as tk
-from sys import exit
-from csv_reader import read_csv
+# import tkinter as tk
+# from csv_reader import read_csv
+# Unneeded ^ ???
 
-# For saving file location.
-import easygui
 
 # }}}
 
@@ -24,51 +22,8 @@ import easygui
 # %% Main {{{
 def main(COURSE_LIST, EmailVar):
 
-    save_name = easygui.filesavebox(default="save.xlsx", filetypes=["*.xlsx"])
-
-    if save_name is None:
-        easygui.exceptionbox("You must choose a save file name", "Note")
-        save_name = easygui.filesavebox(default="save.xlsx", filetypes=["*.xlsx"])
-        if save_name is None:
-            exit()
-
     start_time = time()
     lenn = len(COURSE_LIST)  # To give an idea of how far we are later
-
-    root = tk.Tk()
-    root.geometry('500x120')
-    root.title('Scraping Progress Bar')
-
-    root.withdraw()
-
-    def update_progress_label(CC, start_time, lenn, i):
-        time_ellapsed = time()-start_time
-        if i == -1:
-            timeleft = 0
-        else:
-            timeleft = (lenn / (i+1) - 1) * time_ellapsed
-        return (str(CC) + " Successful \t " + f"{int(pb['value'])} % " +
-                '\t Est. Time Left:'+str(int(timeleft))+'s')
-
-    def progress(CC, start_time, lenn, i, label):
-        if pb['value'] < 100:
-            pb['value'] = (i+1) * 100 / lenn
-            label['text'] = update_progress_label(CC, start_time, lenn, i)
-        root.update()        
-
-    # progress bar
-    pb = ttk.Progressbar(
-        root,
-        orient='horizontal',
-        mode='determinate',
-        length=250,
-        takefocus=True
-    )
-    # place the progress bar
-    i = -1
-    VL = ttk.Label(root, text=update_progress_label("", start_time, lenn, i))
-    progress("", start_time, lenn, i, VL)
-    pb.grid(column=0, row=0, columnspan=2, padx=150, pady=20)
 
     # Excel Stuff {{{
 
