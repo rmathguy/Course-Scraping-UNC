@@ -8,7 +8,7 @@ Finish the read configuration function
 '''
 
 def read_config():
-    
+    temp 
 
 
 def poll_config():
@@ -18,7 +18,7 @@ def poll_config():
 
     if hasConfig:
         return read_config( get_config() )
-    # else:  
+
     makeConfig = easygui.ynbox(msg='Generate Configuration File??', title=' ',
                                choices=('[<F1>]Yes', '[<F2>]No'),
                                image=None, default_choice='[<F1>]Yes')
@@ -32,3 +32,8 @@ def get_config():
                                    filetypes=["*.cfg"],
                                    default="*.cfg")
     return config_file
+
+
+def save_confiig():
+
+
