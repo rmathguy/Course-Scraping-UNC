@@ -1,4 +1,5 @@
-import easygui
+import easygui # For Graphical Pop-ups
+import configparser # For Config file handling.
 
 '''======================
     TODO
@@ -8,7 +9,7 @@ Finish the read configuration function
 '''
 
 def read_config():
-    temp 
+    config = configparser.ConfigParser()
 
 
 def poll_config():
@@ -35,5 +36,12 @@ def get_config():
 
 
 def save_confiig():
+    config_file = easygui.fileopenbox(msg="Choose where to save the configuration
+                                   file.",
+                                   filetypes=["*.cfg"],
+                                   default="*.cfg")
+
+    with open(config_file), 'w') as configfile:
+        config.write(configfile)
 
 
