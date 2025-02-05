@@ -1,0 +1,82 @@
+\documentclass{report} \usepackage{titlesec}
+\newcommand{\citeme}[1]{\citetitle{#1} \cite{#1} }
+
+\usepackage{hyperref}
+\usepackage[backend=biber]{biblatex}
+\addbibresource{python.bib}
+% \bibliographystyle{plain}
+
+\author{Robert Sternquist}
+\title{Course Scraper \\ Documentation}
+\date{\today}
+
+\begin{document}% '{~{~{
+\maketitle 
+
+\tableofcontents
+
+\chapter*{Introduction}% '{~{~{
+This is a loose set of documents meant to help whomever follows me to make
+sense of my python code.
+\\~\\
+It's divided into chapters based off of the Python files with the sections for
+each function with (hopefully) good links between them as needed.
+\\~\\
+This documentation is type-set in \LaTeX to make for ease of linking for the
+original creator (Rob) but it may be unwieldy to whomever follows so use it as
+a template if needed.
+\\~\\
+
+% }~}~}'
+
+\chapter{Main.py}% '{~{~{
+
+% }~}~}'
+
+\chapter{Config.py}% '{~{~{
+
+\section{Function: poll\_config()}% '{~{~{
+
+\subsection{Purpose}% '{~{~{
+This function is meant to ask if the user wants to use a pre-made
+configuration file.
+\begin{itemize}% '{~{~{
+   \item Inputs: None
+   \item Outputs:
+\end{itemize}
+% }~}~}'
+% }~}~}'
+
+\subsection{Run-Time Requirements}% '{~{~{
+We used the following:
+\begin{itemize}% '{~{~{
+   \item \citeme{pkg:Configparser}
+   \item \citeme{pkg:Easygui}
+\end{itemize} % }~}~}'
+
+% }~}~}'
+
+% }~}~}'
+
+
+
+% }~}~}'
+
+\section{Function: read\_config()}% '{~{~{
+
+% }~}~}'
+
+\section{Function: get\_config()}% '{~{~{
+
+% }~}~}'
+
+\section{Function: save\_config()}% '{~{~{
+
+% }~}~}'
+
+% }~}~}'
+
+\newpage
+\printbibliography
+
+\end{document} % }~}~}'
