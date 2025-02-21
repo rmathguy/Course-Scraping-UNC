@@ -2,3 +2,16 @@
 *.txt
 *.csv
 geckodriver.log
+.gitignore~
+.python-version
+*.aux
+*.bbl
+*.bcf*
+*.blg*
+*.fls
+*.log
+*.out
+*.run*
+*.synctex*
+*.tex~
+*.toc
