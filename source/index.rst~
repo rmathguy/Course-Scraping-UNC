@@ -10,19 +10,38 @@ See the
 `reStructuredText <https://www.sphinx-doc.org/en/master/usage/restructuredtext/index.html>`_
 documentation for details.
 
+------------------------------
+Course Scraping Module
+------------------------------
+
+.. automodule:: Course_Scraper
+   :members:
+
+------------------------------
+Config Module
+------------------------------
+
 .. automodule:: config
    :members:
 
-.. automodule:: Course-Scraper.py
-   :members:
+------------------------------
+Get Semester Module
+------------------------------
 
-.. automodule:: csv_reader
+.. automodule:: get_semester
    :members:
+   :imported-members:
 
-.. automodule:: Email_finder
+------------------------------
+Search In Page Module
+------------------------------
+
+.. automodule:: search_in_page
+   :member-order: groupwise
    :members:
+   :imported-members:
+
 
 .. toctree::
    :maxdepth: 2
    :caption: Contents:
-

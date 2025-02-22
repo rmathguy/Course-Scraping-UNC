@@ -1,20 +1,49 @@
-from name_fixer import Name_Fix
-from Email_finder import EF
 
-cols_wanted = [0]
+"COURSE NOT OFFERED CELL"
+No_course_cell = WriteOnlyCell(ws, value="No Sections Offered")
+yellowFill = PatternFill(start_color='FDF96F', end_color='FDF96F',
+                         fill_type='solid')
 
-def scrape(Html, Course_Code, drvr, Cells, EmailVar):
-    (No_email_cell, No_email_cell2, No_course_cell, No_name_cell) = Cells
-    saved_data = []
+No_course_cell.fill = yellowFill
 
-    Email_Hash = dict()
 
-    ROWS = Html.select('tr')
+
+def scrape(HTML, Course_Code, driver, EmailVar):
+    """
+    Takes the HTML as soup and the Course_Code, the driver and var determining if we
+    get the email.
+
+    Does some analysis on whether or not to keep a course that we are scanning
+    for, generally the ones we know won't be relevant like lab sections etc.
+
+    Uses the name fixer function from the name_fixer module to correct the
+    names for searching.
+
+    :params bs4.soup HTML: The BeautifulSoup4 soup for the webpage of courses
+        etc.
+
+    :params str Course_Code: A string of the Course Code in plain text.
+
+    :params selenium.driver DRIVER: The selenium browser driver used.
+
+    :params Bool EmailVar: Get the Emails? True or False?
+
+    :returns: The data to write to the excel sheet/workbook.
+    :rtype: list of lists
+    """
+    saved_data = []  #Create and empty list of the data to save later.
+
+    Email_Hash = dict()  # Create a dictionary to not look up a name multiple
+    times!
+
+    ROWS = HTML.select('tr')
+
     for rownum, Row in enumerate(ROWS[1:]):
         # Get the Course Number:{{{
         Course_Num_HTML = Row.findAll('td', {'rowspan': True})
 
         elements = Row.select('td')
+
         # Get all cell elements starting from the last{{{
         Cell_list = 13*[[]]
         Cell_list[0] = Course_Code
@@ -45,14 +74,17 @@ def scrape(Html, Course_Code, drvr, Cells, EmailVar):
         for ind in range(11):
             Cell_list[-ind-1] = elements[-ind-1].contents[0]
         # }}}
+
         # Course Section Check{{{
-        # Get the section number
+
+        ''' Get the section number '''
         try:
             Num_var = int(elements[-11].contents[0])
         except Exception:
-            Num_var = 1
+            Num_var = 1  # Need to set it to something for later stuff, don't
+            # want to lose something if it might be needed
 
-        if (Num_var < 300):  # CHECKS to see if the section is not a lecture
+        if (Num_var < 300):  ''' CHECKS to see if the section is not a lecture '''
             # got the info on what course numbers were lectures from here:
             # https://registrar.unc.edu/academic-services/policies-procedures/university-policy-memorandums/upm-4-standard-course-numbering-system/
             # }}}
@@ -62,13 +94,16 @@ def scrape(Html, Course_Code, drvr, Cells, EmailVar):
             # add the email
 
             try:
+                # Try and standardize the name.
                 name_tuple = Name_Fix(NAME)
             except Exception:
                 name_tuple = ('Error', 'Error')
             try:
+                # See if we get a 'hash hit'
                 (NameStr, Email) = Email_Hash[name_tuple]
             except Exception:
-                (NameStr, Email) = EF(name_tuple, drvr, No_email_cell, No_email_cell, No_course_cell, No_name_cell, EmailVar)
+                # If not find the email hash it and add to the dictionary.
+                (NameStr, Email) = EmailFinder(name_tuple, driver, EmailVar)
                 Email_Hash[name_tuple] = (NameStr, Email)
 
             # }}
@@ -77,6 +112,14 @@ def scrape(Html, Course_Code, drvr, Cells, EmailVar):
 
     # Error Prevention {{{
     if saved_data == []:
-        saved_data = [[Course_Code,No_course_cell]]  # }}}
+        
+        saved_data = [ [Course_Code, No_course_cell] ]  
+    # }}}
 
     return saved_data
+
+from name_fixer import Name_Fix
+from Email_finder import EmailFinder
+from openpyxl.cell import WriteOnlyCell  # To edit cell attributes
+from openpyxl.styles import PatternFill  # Cell Color Fills
+

@@ -1,20 +1,23 @@
 # %% Webpage and Driver Start{{{
 
-# IMPORTS
-# Imports{{{
-'''Import Selenium and key inputs so that we can press "enter" '''
-from selenium import webdriver
-from selenium.webdriver.common.keys import Keys
-from selenium.webdriver.common.by import By
-from get_semester import get_Semester
-# }}}
-
 
 def main(EmailVar):
+    '''
+    Loads the webpage and  search within in it for the *Course Information* 
+
+    
+    :params Bool EmailVar: A Boolean Saying whether or not to get the emails.
+    :returns: The Firefox Selenium Driver and the windows needed for future
+        work. (The Course Search Window and if we want emails, the secondtab
+        of the directory)
+    :rtype: tuple
+    '''
+
     semester = get_Semester()
     driver = webdriver.Firefox()
     driver.get("https://reports.unc.edu/class-search/advanced_search/")
     # Website is the one above ^
+
     # Lets open another tab for direct:ory seach in the second tab
     Class_Search_Window = driver.window_handles[0]
     # Save the window for later changing
@@ -42,4 +45,14 @@ def main(EmailVar):
 
     else:
         return (driver, Class_Search_Window)
+
+
+# Imports{{{
+'''Import Selenium and key inputs so that we can press "enter" '''
+from selenium import webdriver
+from selenium.webdriver.common.keys import Keys
+from selenium.webdriver.common.by import By
+from get_semester import get_Semester
+# }}}
+
 # }}}

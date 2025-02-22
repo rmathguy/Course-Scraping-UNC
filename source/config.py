@@ -14,18 +14,21 @@ Finish the read configuration function
 '''
 
 
-
 """
-main.py
+config.py
 ====================================
-The core module of my example project
+The config handler module for this program.
 """
+
 
 def read_config():
     """
-    
+    Given a config file read out the contents into variables for use.
     """
+
     config = configparser.ConfigParser()
+
+    return config
 
 
 def poll_config():
@@ -39,7 +42,7 @@ def poll_config():
     makeConfig = easygui.ynbox(msg='Generate Configuration File??', title=' ',
                                choices=('[<F1>]Yes', '[<F2>]No'),
                                image=None, default_choice='[<F1>]Yes')
-    if makeConfig: 
+    if makeConfig:
         save_config()
 
 
@@ -58,5 +61,3 @@ def save_config():
 
     with open(config_file, 'w') as configfile:
         config.write(configfile)
-
-
