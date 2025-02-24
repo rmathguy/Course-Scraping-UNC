@@ -1,16 +1,13 @@
-
-"COURSE NOT OFFERED CELL"
-No_course_cell = WriteOnlyCell(ws, value="No Sections Offered")
-yellowFill = PatternFill(start_color='FDF96F', end_color='FDF96F',
-                         fill_type='solid')
-
-No_course_cell.fill = yellowFill
-
+from name_fixer import Name_Fix
+import Email_Finder
+from openpyxl.cell import WriteOnlyCell  # To edit cell attributes
+from openpyxl.styles import PatternFill  # Cell Color Fills
 
 
 def scrape(HTML, Course_Code, driver, EmailVar):
     """
-    Takes the HTML as soup and the Course_Code, the driver and var determining if we
+    Takes the HTML as soup and the Course_Code,
+    the driver and var determining if we
     get the email.
 
     Does some analysis on whether or not to keep a course that we are scanning
@@ -31,21 +28,33 @@ def scrape(HTML, Course_Code, driver, EmailVar):
     :returns: The data to write to the excel sheet/workbook.
     :rtype: list of lists
     """
+    "COURSE NOT OFFERED CELL"
+
+    No_course_cell = WriteOnlyCell(ws, value="No Sections Offered")
+    yellowFill = PatternFill(start_color='FDF96F', end_color='FDF96F',
+                             fill_type='solid')
+
+    No_course_cell.fill = yellowFill
+    # End Cell Stuff.
+
     saved_data = []  #Create and empty list of the data to save later.
 
-    Email_Hash = dict()  # Create a dictionary to not look up a name multiple
-    times!
+    Email_Hash = dict()  # Create a dictionary to 'cache' an email
+    # given a name
 
     ROWS = HTML.select('tr')
 
     for rownum, Row in enumerate(ROWS[1:]):
         # Get the Course Number:{{{
-        Course_Num_HTML = Row.findAll('td', {'rowspan': True})
+        '''
+        Is the below line neede?
+        '''
+        # Course_Num_HTML = Row.findAll('td', {'rowspan': True})
 
         elements = Row.select('td')
 
         # Get all cell elements starting from the last{{{
-        Cell_list = 13*[[]]
+        Cell_list = 13 * [ [] ]
         Cell_list[0] = Course_Code
 
         # Course Number Check{{{
@@ -84,15 +93,30 @@ def scrape(HTML, Course_Code, driver, EmailVar):
             Num_var = 1  # Need to set it to something for later stuff, don't
             # want to lose something if it might be needed
 
-        if (Num_var < 300):  ''' CHECKS to see if the section is not a lecture '''
+        if (Num_var < 300):  
+            ''' CHECKS to see if the section is not a lecture 
             # got the info on what course numbers were lectures from here:
             # https://registrar.unc.edu/academic-services/policies-procedures/university-policy-memorandums/upm-4-standard-course-numbering-system/
-            # }}}
-
-            # Name{{{
+            # }}} Name{{{
+            '''
             NAME = Cell_list[-2]
             # add the email
+            
+            '''
+            ======================
+                TODO
+            Author: rmathguy
+            02-22-25 (M-D-Y)
+            There is some better way to structure this part with the emails
+            I'm sure.
 
+            Right now it has it that it still uses the Email_Finder funciton
+            even when we should know not to because EmailVar == False.
+
+            Seems right now the only reason why is because we want the
+            No_email_cell2
+
+            '''
             try:
                 # Try and standardize the name.
                 name_tuple = Name_Fix(NAME)
@@ -103,7 +127,7 @@ def scrape(HTML, Course_Code, driver, EmailVar):
                 (NameStr, Email) = Email_Hash[name_tuple]
             except Exception:
                 # If not find the email hash it and add to the dictionary.
-                (NameStr, Email) = EmailFinder(name_tuple, driver, EmailVar)
+                (NameStr, Email) = Email_Finder.EmailFinder(name_tuple, driver, EmailVar)
                 Email_Hash[name_tuple] = (NameStr, Email)
 
             # }}
@@ -118,8 +142,4 @@ def scrape(HTML, Course_Code, driver, EmailVar):
 
     return saved_data
 
-from name_fixer import Name_Fix
-from Email_finder import EmailFinder
-from openpyxl.cell import WriteOnlyCell  # To edit cell attributes
-from openpyxl.styles import PatternFill  # Cell Color Fills
 
