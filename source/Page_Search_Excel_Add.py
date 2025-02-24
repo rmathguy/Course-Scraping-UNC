@@ -1,13 +1,13 @@
 # %% Page Search Excel Add{{{
 from search_in_page import SearchAndSoupifyPage
-from scraper2 import scrape
+import scraper2
 
 
 def main(CC, Driver_info, WS, Cells, EmailVar):
     '''
-    Loads the webpage and  search within in it for the *Course Information* 
+    Loads the webpage and  search within in it for the *Course Information*
 
-    
+
     :params   : No Inputs Needed
     :returns: A Boolean Saying whether or not to get the emails.
     :rtype: Bool
@@ -32,7 +32,7 @@ def main(CC, Driver_info, WS, Cells, EmailVar):
         Drive.switch_to.window(secondtab)
 
     # Save the data later.
-    datatoadd = scrape(soup, CC, Drive, EmailVar)
+    datatoadd = scraper2.scrape(soup, CC, Drive, EmailVar)
 
     # ADDS The DATA TO A Workbook
     for row in datatoadd:
