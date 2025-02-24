@@ -11,11 +11,30 @@ See the
 documentation for details.
 
 ------------------------------
+Auto Summary
+------------------------------
+.. autosummary::
+   :toctree: _autosummary
+   :template: custom-module-template.rst
+   :recursive:  
+
+   Course_Scraper
+
+------------------------------
 Course Scraping Module
 ------------------------------
 
 .. automodule:: Course_Scraper
    :members:
+
+------------------------------
+'Main' Module
+------------------------------
+
+.. automodule:: main
+   :members:
+   :member-order: bysource
+   :imported-members:
 
 ------------------------------
 Config Module
