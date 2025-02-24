@@ -11,6 +11,8 @@ EmailFinder.py
 =========================
 Creates the cell types used if the email is requested.
 
+Requires a pass through of the worksheet.
+
 Defines the function EmailFinder.
 
 """

@@ -16,6 +16,4 @@ def ExcelSpreadsheet():
     ws = wb.create_sheet()
 
     return [wb, ws]
-
 # }}}
-
